@@ -58,7 +58,7 @@ object CorrectionPipeline {
 
             for (correction in enabled) {
                 if (text == TraditionalChinese.toSimplified(correction.title.trim())) {
-                    val fixed = correction.summary.trim()
+                    val fixed = TraditionalChinese.toSimplified(correction.summary.trim())
                     if (fixed.isNotEmpty()) text = fixed
                     break
                 }

@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bgffw.tkfmtool.core.DisplayText
 import com.bgffw.tkfmtool.R
 import com.bgffw.tkfmtool.core.TagMatcher
 import com.bgffw.tkfmtool.util.dp
@@ -111,7 +112,7 @@ class ResultPanel(
             text = if (detected.isEmpty()) {
                 context.getString(R.string.panel_title)
             } else {
-                context.getString(R.string.panel_title) + "：" + detected.joinToString(" / ")
+                context.getString(R.string.panel_title) + "：" + detected.joinToString(" / ", transform = DisplayText::tag)
             }
             setTextColor(Color.WHITE)
             textSize = 12f
@@ -217,7 +218,7 @@ class ResultPanel(
             }
         }
 
-        row.addView(makeCell(matcher.tags.joinToString("\n"), 1f, center = false))
+        row.addView(makeCell(matcher.tags.joinToString("\n", transform = DisplayText::tag), 1f, center = false))
         row.addView(verticalDivider())
         row.addView(makeCell(buildMatchesText(matcher), 3f, center = false))
 
@@ -249,7 +250,7 @@ class ResultPanel(
      * 然后给以 `2☆` / `3☆` 开头的行整行染色。这里保持一致。
      */
     private fun buildMatchesText(matcher: TagMatcher): CharSequence {
-        val text = matcher.matches.joinToString("\n") { it.joinToString(",") } + "\n"
+        val text = matcher.matches.joinToString("\n", transform = DisplayText::row) + "\n"
         if (text.isBlank()) return text
 
         val spannable = SpannableString(text)

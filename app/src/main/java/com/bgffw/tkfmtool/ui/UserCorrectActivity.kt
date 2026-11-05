@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bgffw.tkfmtool.R
 import com.bgffw.tkfmtool.core.Correction
+import com.bgffw.tkfmtool.core.DisplayText
 import com.bgffw.tkfmtool.core.SettingsRepository
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -71,7 +72,7 @@ class UserCorrectActivity : AppCompatActivity() {
         val item = items.getOrNull(position) ?: return
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.correct_delete_title)
-            .setMessage(getString(R.string.correct_delete_message, item.title))
+            .setMessage(getString(R.string.correct_delete_message, DisplayText.tag(item.title)))
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 adapter.removeAt(position)

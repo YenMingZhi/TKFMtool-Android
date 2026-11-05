@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bgffw.tkfmtool.R
 import com.bgffw.tkfmtool.core.Correction
+import com.bgffw.tkfmtool.core.DisplayText
 
 /**
  * 纠错项列表。对应原版 `UserCorrectWindow.js` 的 `todoList`：
@@ -40,8 +41,8 @@ class CorrectionAdapter(
         val item = items[position]
 
         holder.colorBar.setBackgroundColor(parseColor(item.color))
-        holder.title.text = item.title
-        holder.summary.text = item.summary
+        holder.title.text = DisplayText.tag(item.title)
+        holder.summary.text = DisplayText.tag(item.summary)
         holder.done.isChecked = item.done
         applyStrikeThrough(holder.title, item.done)
 

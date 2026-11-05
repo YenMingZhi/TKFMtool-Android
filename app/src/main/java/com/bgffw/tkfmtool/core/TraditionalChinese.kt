@@ -30,6 +30,15 @@ object TraditionalChinese {
         '擾' to '扰'
     )
 
+    private val REVERSE: Map<Char, Char> = MAP.entries.associate { (t, s) -> s to t }
+
+    /** 僅供畫面顯示；內部比對一律使用簡體。 */
+    fun toTraditional(text: String): String {
+        val out = StringBuilder(text.length)
+        for (c in text) out.append(REVERSE[c] ?: c)
+        return out.toString()
+    }
+
     fun toSimplified(text: String): String {
         val out = StringBuilder(text.length)
         for (c in text) out.append(MAP[c] ?: c)

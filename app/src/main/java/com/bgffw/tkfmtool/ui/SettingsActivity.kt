@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bgffw.tkfmtool.R
+import com.bgffw.tkfmtool.core.DisplayText
 import com.bgffw.tkfmtool.core.SettingsRepository
 import com.bgffw.tkfmtool.service.FloatingService
 import com.bgffw.tkfmtool.util.convertToChineseNumber
@@ -184,7 +185,7 @@ class SettingsActivity : AppCompatActivity() {
         val message = if (result.isEmpty()) {
             getString(R.string.last_result_empty)
         } else {
-            getString(R.string.last_result_body, result.joinToString(", "))
+            getString(R.string.last_result_body, result.joinToString(", ", transform = DisplayText::tag))
         }
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.settings_last)
