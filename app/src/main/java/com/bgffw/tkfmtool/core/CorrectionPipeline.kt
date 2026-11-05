@@ -46,7 +46,8 @@ object CorrectionPipeline {
                 .trim()
             if (raw.isEmpty()) continue
 
-            var text = raw
+            // 遊戲是繁體介面、角色庫是簡體，先統一成簡體再做後續比對
+            var text = TraditionalChinese.toSimplified(raw)
 
             for ((needle, replacement) in HARD_RULES) {
                 if (text.contains(needle)) {
@@ -56,7 +57,7 @@ object CorrectionPipeline {
             }
 
             for (correction in enabled) {
-                if (text == correction.title.trim()) {
+                if (text == TraditionalChinese.toSimplified(correction.title.trim())) {
                     val fixed = correction.summary.trim()
                     if (fixed.isNotEmpty()) text = fixed
                     break

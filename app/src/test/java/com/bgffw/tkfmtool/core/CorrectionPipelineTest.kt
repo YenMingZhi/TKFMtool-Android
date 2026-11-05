@@ -35,6 +35,32 @@ class CorrectionPipelineTest {
     ): String = build(listOf(text), corrections, smart).single().text
 
     @Test
+    fun traditionalTagsBecomeDatabaseTags() {
+        val expected = mapOf(
+            "領袖" to "领袖", "風屬性" to "风属性", "闇屬性" to "闇属性", "亞人" to "亚人",
+            "人類" to "人类", "中體型" to "中体型", "貧乳" to "贫乳", "攻擊者" to "攻击者",
+            "守護者" to "守护者", "治療者" to "治疗者", "妨礙者" to "妨碍者", "輔助者" to "辅助者",
+            "輸出" to "输出", "爆發力" to "爆发力", "回擊" to "回击", "防禦" to "防御",
+            "保護" to "保护", "回復" to "回复", "群體攻擊" to "群体攻击",
+            "越戰越強" to "越战越强", "干擾" to "干扰"
+        )
+        for ((traditional, simplified) in expected) {
+            // 關閉詞表吸附，確認是轉換本身生效
+            assertEquals(simplified, single(traditional, smart = false))
+        }
+    }
+
+    @Test
+    fun traditionalKeepsOriginalOcrTextForClicking() {
+        assertEquals("群體攻擊", build(listOf("群體攻擊")).single().raw)
+    }
+
+    @Test
+    fun hardRulesStillApplyToTraditionalText() {
+        assertEquals("闇属性", single("間屬性"))
+    }
+
+    @Test
     fun hardRulesMatchOriginal() {
         // 原版：碍者 → 妨碍者，周 → 闇属性，間 → 闇属性
         assertEquals("妨碍者", single("防碍者"))
